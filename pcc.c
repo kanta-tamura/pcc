@@ -8,8 +8,8 @@
 // トークンの種類
 typedef enum {
 	TK_RESERVED,	// 記号
-	TK_NUM,		// 整数トークン
-	TK_EOF,		// 入力の終わりを表すトークン
+	TK_NUM,			// 整数トークン
+	TK_EOF,			// 入力の終わりを表すトークン
 } TokenKind;
 
 typedef struct Token Token;
@@ -17,20 +17,20 @@ typedef struct Token Token;
 // トークン型
 struct Token {
 	TokenKind kind;	// トークンの型
-	Token *next;	// 次の入力トークン
-	int val;	// kindがTK_NUMの場合、その数値
-	char *str;	// トークン文字列
+	Token* next;	// 次の入力トークン
+	int val;		// kindがTK_NUMの場合、その数値
+	char* str;		// トークン文字列
 };
 
 // 入力プログラム
-char *user_input;
+char* user_input;
 
 // 現在着目しているトークン
-Token *token;
+Token* token;
 
 // エラーを報告するための関数
 // printfと同じ引数を取る
-void error(char *fmt, ...) {
+void error(char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	vfprintf(stderr, fmt, ap);
@@ -39,7 +39,7 @@ void error(char *fmt, ...) {
 }
 
 // エラー箇所を報告する
-void error_at(char *loc, char *fmt, ...) {
+void error_at(char* loc, char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 
@@ -84,8 +84,8 @@ bool at_eof() {
 }
 
 // 新しいトークンを作成してcurに繋げる
-Token *new_token(TokenKind kind, Token *cur, char *str) {
-	Token *tok = calloc(1, sizeof(Token));
+Token* new_token(TokenKind kind, Token* cur, char* str) {
+	Token* tok = calloc(1, sizeof(Token));
 	tok->kind = kind;
 	tok->str = str;
 	cur->next = tok;
@@ -93,11 +93,11 @@ Token *new_token(TokenKind kind, Token *cur, char *str) {
 }
 
 // 入力文字列user_inputをトークナイズしてそれを返す
-Token *tokenize() {
-	char *p = user_input;
+Token* tokenize() {
+	char* p = user_input;
 	Token head;
 	head.next = NULL;
-	Token *cur = &head;
+	Token* cur = &head;
 
 	while (*p) {
 		// 空白文字をスキップ
@@ -124,7 +124,7 @@ Token *tokenize() {
 	return head.next;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
 	if (argc != 2) {
 		fprintf(stderr, "引数の個数が正しくありません\n");
 		return 1;
